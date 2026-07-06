@@ -1,0 +1,205 @@
+<div class="min-h-screen flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8 relative">
+
+  <%!-- Background SVG --%>
+  <div class="fixed inset-0 z-0">
+    <svg viewBox="0 0 1480 957" fill="none" aria-hidden="true"
+      class="absolute inset-0 h-full w-full" preserveAspectRatio="xMinYMid slice">
+      <path fill="#2563EB" d="M0 0h1480v957H0z" />
+      <path d="M137.542 466.27c-582.851-48.41-988.806-82.127-1608.412 658.2l67.39 810 3083.15-256.51L1535.94-49.622l-98.36 8.183C1269.29 281.468 734.115 515.799 146.47 467.012l-8.928-.742Z" fill="#3B82F6"/>
+      <path d="M371.028 528.664C-169.369 304.988-545.754 149.198-1361.45 665.565l-182.58 792.025 3014.73 694.98 389.42-1689.25-96.18-22.171C1505.28 697.438 924.153 757.586 379.305 532.09l-8.277-3.426Z" fill="#60A5FA"/>
+      <path d="M359.326 571.714C-104.765 215.795-428.003-32.102-1349.55 255.554l-282.3 1224.596 3047.04 722.01 312.24-1354.467C1411.25 1028.3 834.355 935.995 366.435 577.166l-7.109-5.452Z" fill="#93C5FD" fill-opacity=".6"/>
+    </svg>
+  </div>
+
+  <%!-- Card --%>
+  <div class="relative z-10 w-full max-w-lg">
+    <div class="bg-base-100/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 sm:p-10">
+
+      <%!-- Header --%>
+      <div class="text-center mb-8">
+        <a href="/" class="inline-flex items-center gap-2 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
+            <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white">
+              <path d="M12 3L2 8l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M2 16l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="font-bold text-xl text-base-content">Canaan</span>
+        </a>
+        <h2 class="text-2xl font-bold text-base-content">Create your account</h2>
+        <p class="mt-1 text-sm text-base-content/60">Join the Canaan school community</p>
+      </div>
+
+      <%!-- Flash messages --%>
+      <.flash flash={@flash} />
+
+      <%!-- Form --%>
+      <.form for={@changeset} action={~p"/register"} method="post" class="space-y-5">
+
+        <%!-- First & Last Name --%>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="form-control">
+            <label class="label pb-1">
+              <span class="label-text font-medium">First Name <span class="text-error">*</span></span>
+            </label>
+            <input
+              type="text"
+              name="user[first_name]"
+              value={@changeset.params["first_name"] || ""}
+              required
+              class={"input input-bordered w-full #{if @changeset.errors[:first_name], do: "input-error"}"}
+              placeholder="John"
+            />
+            <%= if msg = @changeset.errors[:first_name] do %>
+              <label class="label pt-1">
+                <span class="label-text-alt text-error"><%= elem(msg, 0) %></span>
+              </label>
+            <% end %>
+          </div>
+
+          <div class="form-control">
+            <label class="label pb-1">
+              <span class="label-text font-medium">Last Name <span class="text-error">*</span></span>
+            </label>
+            <input
+              type="text"
+              name="user[last_name]"
+              value={@changeset.params["last_name"] || ""}
+              required
+              class={"input input-bordered w-full #{if @changeset.errors[:last_name], do: "input-error"}"}
+              placeholder="Doe"
+            />
+            <%= if msg = @changeset.errors[:last_name] do %>
+              <label class="label pt-1">
+                <span class="label-text-alt text-error"><%= elem(msg, 0) %></span>
+              </label>
+            <% end %>
+          </div>
+        </div>
+
+        <%!-- Middle Name --%>
+        <div class="form-control">
+          <label class="label pb-1">
+            <span class="label-text font-medium">Middle Name <span class="text-error">*</span></span>
+          </label>
+          <input
+            type="text"
+            name="user[middle_name]"
+            value={@changeset.params["middle_name"] || ""}
+            required
+            class={"input input-bordered w-full #{if @changeset.errors[:middle_name], do: "input-error"}"}
+            placeholder="Kamau"
+          />
+          <%= if msg = @changeset.errors[:middle_name] do %>
+            <label class="label pt-1">
+              <span class="label-text-alt text-error"><%= elem(msg, 0) %></span>
+            </label>
+          <% end %>
+        </div>
+
+        <%!-- Email --%>
+        <div class="form-control">
+          <label class="label pb-1">
+            <span class="label-text font-medium">Email Address <span class="text-error">*</span></span>
+          </label>
+          <input
+            type="email"
+            name="user[email]"
+            value={@changeset.params["email"] || ""}
+            required
+            autocomplete="email"
+            class={"input input-bordered w-full #{if @changeset.errors[:email], do: "input-error"}"}
+            placeholder="you@school.ac.ke"
+          />
+          <%= if msg = @changeset.errors[:email] do %>
+            <label class="label pt-1">
+              <span class="label-text-alt text-error"><%= elem(msg, 0) %></span>
+            </label>
+          <% end %>
+        </div>
+
+        <%!-- Phone & Gender Row --%>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="form-control">
+            <label class="label pb-1">
+              <span class="label-text font-medium">Phone Number <span class="text-error">*</span></span>
+            </label>
+            <input
+              type="tel"
+              name="user[phone_number]"
+              value={@changeset.params["phone_number"] || ""}
+              required
+              class={"input input-bordered w-full #{if @changeset.errors[:phone_number], do: "input-error"}"}
+              placeholder="+254 700 000 000"
+            />
+            <%= if msg = @changeset.errors[:phone_number] do %>
+              <label class="label pt-1">
+                <span class="label-text-alt text-error"><%= elem(msg, 0) %></span>
+              </label>
+            <% end %>
+          </div>
+
+          <div class="form-control">
+            <label class="label pb-1">
+              <span class="label-text font-medium">Gender <span class="text-error">*</span></span>
+            </label>
+            <select
+              name="user[gender]"
+              required
+              class={"select select-bordered w-full #{if @changeset.errors[:gender], do: "select-error"}"}
+            >
+              <option value="" disabled selected>Select gender</option>
+              <option value="male" selected={@changeset.params["gender"] == "male"}>Male</option>
+              <option value="female" selected={@changeset.params["gender"] == "female"}>Female</option>
+            </select>
+            <%= if msg = @changeset.errors[:gender] do %>
+              <label class="label pt-1">
+                <span class="label-text-alt text-error"><%= elem(msg, 0) %></span>
+              </label>
+            <% end %>
+          </div>
+        </div>
+
+        <%!-- Password --%>
+        <div class="form-control">
+          <label class="label pb-1">
+            <span class="label-text font-medium">Password <span class="text-error">*</span></span>
+          </label>
+          <input
+            type="password"
+            name="user[password]"
+            required
+            autocomplete="new-password"
+            minlength="8"
+            class={"input input-bordered w-full #{if @changeset.errors[:password], do: "input-error"}"}
+            placeholder="••••••••"
+          />
+          <%= if msg = @changeset.errors[:password] do %>
+            <label class="label pt-1">
+              <span class="label-text-alt text-error"><%= elem(msg, 0) %></span>
+            </label>
+          <% end %>
+          <label class="label pt-1">
+            <span class="label-text-alt text-base-content/50">Minimum 8 characters</span>
+          </label>
+        </div>
+
+        <%!-- Submit --%>
+        <button type="submit" class="btn btn-primary w-full mt-2 gap-2">
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
+          </svg>
+          Create Account
+        </button>
+
+        <%!-- Login link --%>
+        <p class="text-center text-sm text-base-content/60 pt-2">
+          Already have an account?
+          <a href="/login" class="font-semibold text-primary hover:text-primary/80 ml-1">Sign in</a>
+        </p>
+
+      </.form>
+    </div>
+  </div>
+</div>

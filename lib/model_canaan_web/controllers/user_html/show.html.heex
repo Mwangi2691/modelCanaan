@@ -1,0 +1,59 @@
+<main style="min-height: calc(100vh - 65px)" class="py-8 bg-neutral-100">
+  <div class="px-4 sm:px-6 lg:px-6 space-y-6 md:space-y-8 max-w-3xl">
+
+    <section>
+      <.link href={~p"/admin/users"} class="text-sm text-primary-700 hover:text-primary-800">
+        &larr; Back to users
+      </.link>
+      <h2 class="text-2xl font-semibold text-gray-900 mt-2 mb-0">
+        <%= Accounts.user_full_name(@user) %>
+      </h2>
+      <p class="text-sm text-gray-800 font-normal m-0"><%= @user.email %></p>
+    </section>
+
+    <section class="border border-gray-200 rounded-xl bg-white p-6 space-y-4">
+      <h3 class="text-base font-semibold text-gray-900">Current roles</h3>
+
+      <%= if @user.roles == [] do %>
+        <p class="text-sm text-gray-500">This user has no role assigned yet.</p>
+      <% else %>
+        <div class="divide-y divide-gray-200">
+          <%= for role <- @user.roles do %>
+            <div class="flex items-center justify-between py-3">
+              <div>
+                <p class="text-sm font-medium text-gray-900"><%= role.name %></p>
+                <p class="text-xs text-gray-500"><%= role.description %></p>
+              </div>
+              <.link
+                href={~p"/admin/users/#{@user.id}/roles/#{role.id}"}
+                method="delete"
+                data-confirm={"Revoke #{role.name} from #{Accounts.user_full_name(@user)}?"}
+                class="text-sm text-red-600 hover:text-red-700"
+              >
+                Revoke
+              </.link>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="border border-gray-200 rounded-xl bg-white p-6 space-y-4">
+      <h3 class="text-base font-semibold text-gray-900">Assign a role</h3>
+
+      <%= if @assignable_roles == [] do %>
+        <p class="text-sm text-gray-500">This user already has every role.</p>
+      <% else %>
+        <form action={~p"/admin/users/#{@user.id}/roles"} method="post" class="flex items-center gap-3">
+          <input type="hidden" name="_csrf_token" value={Phoenix.Controller.get_csrf_token()} />
+          <select name="role_id" class="rounded-lg border border-gray-300 px-3 py-2 text-sm">
+            <%= for role <- @assignable_roles do %>
+              <option value={role.id}><%= role.name %></option>
+            <% end %>
+          </select>
+          <.button>Assign</.button>
+        </form>
+      <% end %>
+    </section>
+  </div>
+</main>

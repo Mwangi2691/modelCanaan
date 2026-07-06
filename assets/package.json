@@ -1,0 +1,19 @@
+{
+  "name": "model_canaan_assets",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css --minify",
+    "watch": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css --watch",
+    "build": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css --minify"
+  },
+  "dependencies": {
+    "phoenix": "file:../deps/phoenix",
+    "phoenix_html": "file:../deps/phoenix_html",
+    "phoenix_live_view": "file:../deps/phoenix_live_view"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "daisyui": "^4.7.0"
+  }
+}

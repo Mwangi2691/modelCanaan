@@ -1,0 +1,123 @@
+<div class="min-h-screen flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8 relative">
+
+  <%!-- Background SVG --%>
+  <div class="fixed inset-0 z-0">
+    <svg viewBox="0 0 1480 957" fill="none" aria-hidden="true"
+      class="absolute inset-0 h-full w-full" preserveAspectRatio="xMinYMid slice">
+      <path fill="#2563EB" d="M0 0h1480v957H0z" />
+      <path d="M137.542 466.27c-582.851-48.41-988.806-82.127-1608.412 658.2l67.39 810 3083.15-256.51L1535.94-49.622l-98.36 8.183C1269.29 281.468 734.115 515.799 146.47 467.012l-8.928-.742Z" fill="#3B82F6"/>
+      <path d="M371.028 528.664C-169.369 304.988-545.754 149.198-1361.45 665.565l-182.58 792.025 3014.73 694.98 389.42-1689.25-96.18-22.171C1505.28 697.438 924.153 757.586 379.305 532.09l-8.277-3.426Z" fill="#60A5FA"/>
+      <path d="M359.326 571.714C-104.765 215.795-428.003-32.102-1349.55 255.554l-282.3 1224.596 3047.04 722.01 312.24-1354.467C1411.25 1028.3 834.355 935.995 366.435 577.166l-7.109-5.452Z" fill="#93C5FD" fill-opacity=".6"/>
+    </svg>
+  </div>
+
+  <%!-- Card --%>
+  <div class="relative z-10 w-full max-w-md">
+    <div class="bg-base-100/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 sm:p-10">
+
+      <%!-- Header --%>
+      <div class="text-center mb-8">
+        <a href="/" class="inline-flex items-center gap-2 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
+            <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white">
+              <path d="M12 3L2 8l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M2 16l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="font-bold text-xl text-base-content">Canaan Model School</span>
+        </a>
+        <h2 class="text-2xl font-bold text-base-content">Welcome back</h2>
+        <p class="mt-1 text-sm text-base-content/60">Sign in to your school account</p>
+      </div>
+
+      <%!-- Flash messages --%>
+      <.flash flash={@flash} />
+
+      <%!-- Form --%>
+      <form action={~p"/login"} method="post" class="space-y-5">
+        <input type="hidden" name="_csrf_token" value={Plug.CSRFProtection.get_csrf_token()} />
+
+        <%!-- Email --%>
+        <div class="form-control">
+          <label class="label pb-1" for="email">
+            <span class="label-text font-medium">Email Address</span>
+          </label>
+          <input
+            type="email"
+            name="session[email]"
+            id="email"
+            required
+            autocomplete="email"
+            class="input input-bordered w-full"
+            placeholder="you@school.ac.ke"
+          />
+        </div>
+
+        <%!-- Password --%>
+        <div class="form-control">
+          <label class="label pb-1" for="password">
+            <span class="label-text font-medium">Password</span>
+            <a href="/forgot-password" class="label-text-alt text-primary hover:underline">
+              Forgot password?
+            </a>
+          </label>
+          <input
+            type="password"
+            name="session[password]"
+            id="password"
+            required
+            autocomplete="current-password"
+            class="input input-bordered w-full"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <%!-- Remember me --%>
+        <div class="form-control">
+          <label class="label cursor-pointer justify-start gap-3">
+            <input type="checkbox" name="session[remember_me]" value="true" class="checkbox checkbox-primary checkbox-sm" />
+            <span class="label-text text-base-content/70">Remember me for 30 days</span>
+          </label>
+        </div>
+
+        <%!-- Submit --%>
+        <button type="submit" class="btn btn-primary w-full gap-2 mt-2">
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+          Sign In
+        </button>
+
+        <%!-- Divider --%>
+        <div class="divider text-base-content/30 text-xs">OR</div>
+
+        <%!-- Role hint badges --%>
+        <div class="flex justify-center gap-2 flex-wrap">
+          <span class="badge badge-outline badge-sm gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            Admin
+          </span>
+          <span class="badge badge-outline badge-sm gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+            Teacher
+          </span>
+          <span class="badge badge-outline badge-sm gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-warning"></span>
+            Parent
+          </span>
+        </div>
+        <p class="text-center text-xs text-base-content/40">
+          You'll be directed to your role's dashboard after signing in.
+        </p>
+
+        <%!-- Register link --%>
+        <p class="text-center text-sm text-base-content/60 pt-1">
+          Don't have an account?
+          <a href="/register" class="font-semibold text-primary hover:text-primary/80 ml-1">Create one</a>
+        </p>
+
+      </form>
+    </div>
+  </div>
+</div>

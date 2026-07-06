@@ -1,0 +1,25 @@
+<.header>New Role</.header>
+
+<.form :let={f} for={@changeset} action={~p"/admin/roles"}>
+  <.input field={f[:name]} label="Name" placeholder="e.g. Head Teacher" />
+  <.input field={f[:slug]} label="Slug" placeholder="e.g. head_teacher" />
+  <.input field={f[:type]} label="Type" placeholder="e.g. teacher" />
+  <.input field={f[:description]} type="textarea" label="Description" />
+
+  <fieldset>
+    <legend>Permissions</legend>
+    <%= for permission <- @permissions do %>
+      <label class="checkbox-row">
+        <input
+          type="checkbox"
+          name="role[permission_ids][]"
+          value={permission.id}
+        />
+        <%= permission.name %>
+        <span class="muted">(<%= permission.action %> · <%= permission.resource %>)</span>
+      </label>
+    <% end %>
+  </fieldset>
+
+  <.button>Create Role</.button>
+</.form>

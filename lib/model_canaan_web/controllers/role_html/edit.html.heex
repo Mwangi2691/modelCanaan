@@ -1,0 +1,99 @@
+<main class="min-h-screen bg-gray-300 py-8">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-8 flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">
+          Edit Role
+        </h1>
+
+        <p class="mt-1 text-sm text-gray-600">
+          Update the role details and manage its permissions.
+        </p>
+      </div>
+
+      <.link
+        href={~p"/admin/roles"}
+        class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      >
+        Back
+      </.link>
+    </div>
+
+    <div class="rounded-xl border border-gray-200 bg-white shadow-sm">
+      <.form
+        :let={f}
+        for={@changeset}
+        action={~p"/admin/roles/#{@id}"}
+        method="put"
+        class="space-y-6 p-6"
+      >
+        <div class="grid gap-6 md:grid-cols-2">
+          <.input
+            field={f[:name]}
+            label="Role Name"
+          />
+
+          <.input
+            field={f[:slug]}
+            label="Slug"
+          />
+
+          <.input
+            field={f[:type]}
+            label="Type"
+          />
+        </div>
+
+        <.input
+          field={f[:description]}
+          type="textarea"
+          label="Description"
+        />
+
+        <div>
+          <h2 class="mb-4 text-lg font-semibold text-gray-900">
+            Permissions
+          </h2>
+
+          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <label
+              :for={permission <- @permissions}
+              class="flex items-start gap-3 rounded-lg border border-gray-200 p-4 hover:border-primary-600 hover:bg-gray-50 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                name="role[permission_ids][]"
+                value={permission.id}
+                checked={permission.id in @selected_permission_ids}
+                class="mt-1 h-4 w-4 rounded border-gray-300 text-primary-600"
+              />
+
+              <div>
+                <p class="font-medium text-gray-900">
+                  {permission.name}
+                </p>
+
+                <p class="text-sm text-gray-500">
+                  {permission.action} • {permission.resource}
+                </p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 border-t pt-6">
+          <.link
+            href={~p"/admin/roles"}
+            class="rounded-lg border border-gray-300 px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            Cancel
+          </.link>
+
+          <.button class="rounded-lg bg-primary-700 px-5 py-2 hover:bg-primary-800">
+            Update Role
+          </.button>
+        </div>
+      </.form>
+    </div>
+  </div>
+</main>

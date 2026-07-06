@@ -1,0 +1,72 @@
+<main style="min-height: calc(100vh - 65px)" class="py-8 bg-blue-300">
+  <div class="px-4 sm:px-6 lg:px-6 space-y-6 md:space-y-8">
+    <!-- Header -->
+    <section class="md:flex md:items-center md:justify-between md:space-x-3">
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-900">Admin Dashboard</h2>
+        <p class="text-sm text-gray-800">Overview of Canaan's users and roles</p>
+      </div>
+      <div class="mt-3 flex gap-2 md:mt-0">
+        <.link href={~p"/admin/users"} class="rounded-full border border-primary-700 bg-primary-700 px-3 py-2 text-sm font-medium text-white hover:bg-primary-800">
+          Manage Users
+        </.link>
+        <.link href={~p"/admin/roles"} class="rounded-full border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+          Roles &amp; Permissions
+        </.link>
+      </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="border border-gray-200 rounded-xl bg-blue-100 p-6">
+        <p class="text-sm text-gray-600">Total Users</p>
+        <p class="text-3xl font-semibold text-gray-900 mt-2">{@user_count}</p>
+      </div>
+      <div :for={{label, count} <- @role_breakdown} class="border border-gray-200 rounded-xl bg-white p-6">
+        <p class="text-sm text-gray-600">{label}</p>
+        <p class="text-3xl font-semibold text-gray-900 mt-2">{count}</p>
+      </div>
+    </section>
+
+    <!-- Users Table -->
+    <section>
+      <h2 class="text-lg font-semibold mb-4">Users</h2>
+      <table class="min-w-full border border-gray-200">
+        <thead class="bg-white">
+          <tr>
+            <th class="px-4 py-2 text-gray-700 text-left">Name</th>
+            <th class="px-4 py-2 text-gray-700 text-left">Email</th>
+            <th class="px-4 py-2 text-gray-700 text-left">Role</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr :for={user <- @users} class="border-t">
+            <td class="px-4 py-2 text-gray-700">{user.first_name} {user.last_name}</td>
+            <td class="px-4 py-2 text-gray-700">{user.email}</td>
+           
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="border border-gray-200 rounded-xl bg-blue-100 p-6">
+      <h3 class="text-base font-semibold text-gray-900 mb-4">Quick Actions</h3>
+      <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+        <li>
+          Assign or revoke a role from any user in
+          <.link href={~p"/admin/users"} class="text-primary-700 hover:underline">
+            Manage Users
+          </.link>
+        </li>
+        <li>
+          Create a new role or adjust its permissions in
+          <.link href={~p"/admin/roles"} class="text-primary-700 hover:underline">
+            Roles &amp; Permissions
+          </.link>
+        </li>
+      </ul>
+    </section>
+  </div>
+</main>

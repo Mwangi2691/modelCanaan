@@ -1,0 +1,60 @@
+<main style="min-height: calc(100vh - 65px)" class="py-8 bg-gray-300">
+  <div class="px-4 sm:px-6 lg:px-6 space-y-6 md:space-y-8">
+
+    <section class="md:flex md:items-center md:justify-between md:space-x-3 bg-blue-500 md:rounded-xl md:overflow-hidden md:shadow-md p-4">
+      <div>
+        <h2 class="text-2xl font-semibold text-white-900 mb-0">Users</h2>
+        <p class="text-sm text-white-800 font-normal m-0">
+          Everyone with an account in Canaan
+        </p>
+      </div>
+    </section>
+
+    <section class="border border-gray-200 rounded-xl bg-gray-300 overflow-hidden">
+      <form action={~p"/admin/users"} method="get" class="p-4 border-b border-gray-200">
+        <input
+          type="text"
+          name="search"
+          value={@search_value}
+          placeholder="Search by name or email..."
+          class="w-full max-w-sm rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-600 focus:outline-none focus:ring-1 focus:ring-primary-600 bg-white"
+        />
+      </form>
+
+      <table class="w-full text-sm">
+        <thead class="bg-gray-0 text-gray-500 text-left">
+          <tr>
+            <th class="px-4 py-3 font-medium">Name</th>
+            <th class="px-4 py-3 font-medium">Email</th>
+            <th class="px-4 py-3 font-medium">Roles</th>
+            <th class="px-4 py-3 font-medium"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <%= for user <- @users do %>
+            <tr>
+              <td class="px-4 py-3 text-gray-900"><%= Accounts.user_full_name(user) %></td>
+              <td class="px-4 py-3 text-gray-600"><%= user.email %></td>
+              <td class="px-4 py-3 text-gray-600">
+                <%= if user.roles == [] do %>
+                  <span class="text-gray-400">no role</span>
+                <% else %>
+                  <%= for role <- user.roles do %>
+                    <span class="inline-block rounded-full bg-primary-50 text-primary-700 px-2 py-0.5 text-xs mr-1">
+                      <%= role.name %>
+                    </span>
+                  <% end %>
+                <% end %>
+              </td>
+              <td class="px-4 py-3 text-right text-gray-600">
+                <.link href={~p"/admin/users/#{user.id}"} class="text-primary-700 hover:text-primary-800">
+                  Manage
+                </.link>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</main>
