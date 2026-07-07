@@ -1,0 +1,28 @@
+<main class="py-8">
+  <div class="px-6 space-y-4 max-w-2xl">
+    <h2 class="text-2xl font-semibold text-gray-900">
+      Fee Records — <%= @student.first_name %> <%= @student.last_name %>
+    </h2>
+
+    <table class="w-full text-sm bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <thead class="bg-gray-50 text-left text-gray-500">
+        <tr>
+          <th class="px-4 py-3">Year</th>
+          <th class="px-4 py-3">Term</th>
+          <th class="px-4 py-3">Due</th>
+          <th class="px-4 py-3">Paid</th>
+          <th class="px-4 py-3">Status</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr :for={fee <- @fee_records}>
+          <td class="px-4 py-3"><%= fee.academic_year %></td>
+          <td class="px-4 py-3"><%= fee.term %></td>
+          <td class="px-4 py-3">KSh <%= fee.amount_due %></td>
+          <td class="px-4 py-3">KSh <%= fee.amount_paid %></td>
+          <td class="px-4 py-3 capitalize"><%= fee.status %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

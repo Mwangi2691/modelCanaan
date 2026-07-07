@@ -1,0 +1,20 @@
+<main class="py-8">
+  <div class="px-6 space-y-6">
+    <h2 class="text-2xl font-semibold text-gray-900">Principal Dashboard</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="border border-gray-200 rounded-xl bg-white p-6">
+        <p class="text-sm text-gray-600">Classes</p>
+        <p class="text-3xl font-semibold text-gray-900 mt-2"><%= @class_count %></p>
+      </div>
+      <div class="border border-gray-200 rounded-xl bg-white p-6">
+        <p class="text-sm text-gray-600">Students</p>
+        <p class="text-3xl font-semibold text-gray-900 mt-2"><%= @student_count %></p>
+      </div>
+      <div class="border border-gray-200 rounded-xl bg-white p-6">
+        <p class="text-sm text-gray-600">Reports Submitted</p>
+        <p class="text-3xl font-semibold text-gray-900 mt-2"><%= @report_count %></p>
+      </div>
+    </div>
+  </div>
+</main>

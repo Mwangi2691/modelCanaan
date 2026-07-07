@@ -22,7 +22,7 @@
       </form>
 
       <table class="w-full text-sm">
-        <thead class="bg-gray-0 text-gray-500 text-left">
+        <thead class="bg-dejavu-0 text-gray-500 text-left border border-black-300">
           <tr>
             <th class="px-4 py-3 font-medium">Name</th>
             <th class="px-4 py-3 font-medium">Email</th>
@@ -46,8 +46,8 @@
                   <% end %>
                 <% end %>
               </td>
-              <td class="px-4 py-3 text-right text-gray-600">
-                <.link href={~p"/admin/users/#{user.id}"} class="text-primary-700 hover:text-primary-800">
+              <td class="px-4 py-3 text-right text-gray-600  bg-blue-100 rounded-lg hover:bg-blue-400">
+                <.link href={~p"/admin/users/#{user.id}"} class="text-primary-700 hover:text-primary-800 ">
                   Manage
                 </.link>
               </td>

@@ -1,0 +1,19 @@
+<div class="min-h-screen bg-neutral-100 flex">
+  <aside class="w-56 shrink-0 bg-white border-r border-gray-200 min-h-screen">
+    <div class="px-4 py-5 border-b border-gray-200">
+      <p class="font-semibold text-gray-900">Canaan Teacher</p>
+    </div>
+    <nav class="p-3 space-y-1 text-sm">
+      <.link href={~p"/teacher/dashboard"} class="block rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-100">
+        Dashboard
+      </.link>
+      <form action={~p"/logout"} method="delete" class="pt-2 mt-2 border-t border-gray-200">
+        <input type="hidden" name="_csrf_token" value={Phoenix.Controller.get_csrf_token()} />
+        <button type="submit" class="block w-full text-left rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-100">
+          Sign out
+        </button>
+      </form>
+    </nav>
+  </aside>
+  <div class="flex-1 min-w-0"><%= @inner_content %></div>
+</div>

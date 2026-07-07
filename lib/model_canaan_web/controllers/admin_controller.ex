@@ -9,6 +9,7 @@ defmodule ModelCanaanWeb.AdminController do
 
   def dashboard(conn, _params) do
     users = Accounts.list_users()
+    role = Repo.preload(users, roles: :permissions)
     role_breakdown =
       Role
       |> Repo.all()

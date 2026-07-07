@@ -7,7 +7,6 @@ defmodule ModelCanaanWeb.Router do
       require_role: 2
     ]
 
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -43,7 +42,6 @@ defmodule ModelCanaanWeb.Router do
     plug :require_role, "parent"
   end
 
-
   scope "/", ModelCanaanWeb do
     pipe_through :browser
 
@@ -67,26 +65,43 @@ defmodule ModelCanaanWeb.Router do
     get "/users", UserController, :index
     get "/users/:id", UserController, :show
 
-
     post "/users/:id/roles", RoleController, :assign_role
     delete "/users/:user_id/roles/:role_id", RoleController, :revoke_role
   end
 
+  pipeline :require_principal do
+    plug ModelCanaanWeb.Plugs.RequireRole, "principal"
+  end
 
+  pipeline :require_teacher do
+    plug ModelCanaanWeb.Plugs.RequireRole, "teacher"
+  end
 
   scope "/teacher", ModelCanaanWeb do
-    pipe_through [:browser, :teacher_only]
+    pipe_through [:browser, :require_teacher]
 
     get "/dashboard", TeacherController, :dashboard
+    get "/students/:id", TeacherController, :show_student
+    post "/students/:id/attendance", TeacherController, :mark_attendance
+    get "/classes/:id/report/new", TeacherController, :new_report
+    post "/classes/:id/report", TeacherController, :create_report
   end
 
+  scope "/principal", ModelCanaanWeb do
+    pipe_through [:browser, :require_principal]
 
-  scope "/parent", ModelCanaanWeb do
-    pipe_through [:browser, :parent_only]
+    get "/dashboard", PrincipalController, :dashboard
 
-    get "/dashboard", ParentController, :dashboard
+    get "/students/new", PrincipalController, :new_student
+    post "/students", PrincipalController, :create_student
+    get "/students/:id/finance", PrincipalController, :student_finance
+
+    get "/assignments/new", PrincipalController, :new_assignment
+    post "/assignments", PrincipalController, :create_assignment
+
+    get "/reports", PrincipalController, :reports
+    post "/reports/:id/review", PrincipalController, :review_report
   end
-
 
   if Application.compile_env(:model_canaan, :dev_routes) do
     import Phoenix.LiveDashboard.Router

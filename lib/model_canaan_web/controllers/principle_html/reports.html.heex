@@ -1,0 +1,24 @@
+<main class="py-8">
+  <div class="px-6 space-y-4">
+    <h2 class="text-2xl font-semibold text-gray-900">Teacher Reports</h2>
+
+    <div :for={report <- @reports} class="border border-gray-200 rounded-xl bg-white p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-medium text-gray-900"><%= report.title %></p>
+          <p class="text-xs text-gray-500">
+            <%= Accounts.user_full_name(report.teacher) %> · <%= report.class.name %> ·
+            <span class={if report.status == "reviewed", do: "text-green-600", else: "text-amber-600"}>
+              <%= report.status %>
+            </span>
+          </p>
+        </div>
+        <form :if={report.status != "reviewed"} action={~p"/principal/reports/#{report.id}/review"} method="post">
+          <input type="hidden" name="_csrf_token" value={Phoenix.Controller.get_csrf_token()} />
+          <.button>Mark Reviewed</.button>
+        </form>
+      </div>
+      <p class="text-sm text-gray-700 mt-3"><%= report.content %></p>
+    </div>
+  </div>
+</main>

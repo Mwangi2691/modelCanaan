@@ -1,0 +1,27 @@
+<main class="py-8">
+  <div class="px-6 max-w-xl">
+    <h2 class="text-2xl font-semibold text-gray-900 mb-4">Assign Teacher to Class</h2>
+
+    <form action={~p"/principal/assignments"} method="post" class="space-y-4 bg-white border border-gray-200 rounded-xl p-6">
+      <input type="hidden" name="_csrf_token" value={Phoenix.Controller.get_csrf_token()} />
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Teacher</label>
+        <select name="teacher_id" class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm">
+          <option :for={teacher <- @teachers} value={teacher.id}>
+            <%= Accounts.user_full_name(teacher) %>
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Class</label>
+        <select name="class_id" class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm">
+          <option :for={class <- @classes} value={class.id}><%= class.name %> <%= class.stream %></option>
+        </select>
+      </div>
+
+      <.button>Assign</.button>
+    </form>
+  </div>
+</main>
